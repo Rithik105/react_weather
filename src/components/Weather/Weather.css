@@ -1,0 +1,210 @@
+.body {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  margin-left: 7%;
+  margin-right: 7.5%;
+  height: 85vh;
+}
+.top-container {
+  text-align: left;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 37px;
+  height: 61px;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+  color: #ffffff;
+  font-family: Roboto;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 24px;
+}
+.top-container-fav-item {
+  display: flex;
+  flex-direction: row;
+}
+.fav-icon {
+  height: 16.97px;
+  width: 18px;
+  background-color: transparent;
+  border: 0px solid black;
+  /* background-image: url("src/assets/images/icon_favourite_Active.png"); */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.fav-icon2 {
+  height: 16.97px;
+  width: 18px;
+  border: 0px solid black;
+  /* background-image: url("src/assets/images/png-transparent-heart-symbol-computer-icons-heart-love-text-heart-thumbnail.png"); */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+#fav-text {
+  margin-left: 10px;
+  height: 15px;
+  width: 108px;
+  color: #fad05b;
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 15px;
+}
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 26px;
+  margin-bottom: 60px;
+  height: 250px;
+  width: 100%;
+  align-items: center;
+}
+#sun-image {
+  align-items: center;
+  height: 84px;
+  width: 80px;
+  object-fit: fill;
+}
+#temperature-container {
+  height: 75px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+#temperature-label {
+  color: #ffffff;
+  font-family: Roboto;
+  font-size: 64px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+#temperature-button {
+  margin-left: 10px;
+  height: 30px;
+  width: 55px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.temperature-button-item {
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  flex: 1;
+  height: 100%;
+  border: 1px solid white;
+  background-color: transparent;
+  color: white;
+  color: #ffffff;
+  font-family: Roboto;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 19px;
+}
+.temperature-button-item-extra {
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+#weather-label {
+  height: 25px;
+  color: #ffffff;
+  font-family: Roboto;
+  font-size: 22px;
+  letter-spacing: 0;
+  line-height: 25px;
+  text-align: center;
+}
+.button-active {
+  background-color: white;
+  color: red;
+}
+.bottom-sheet {
+  margin-top: 2px;
+  display: flex;
+
+  padding: 0px 5%;
+  justify-content: space-around;
+  text-align: center;
+  box-sizing: border-box;
+  margin-bottom: 48px;
+  width: 100%;
+  height: fit-content;
+}
+.bottom-bar-item {
+  justify-self: center;
+  display: inline-block;
+  height: fit-content;
+  width: fit-content;
+}
+.bottom-bar-item img {
+  padding-bottom: 10px;
+}
+.bottom-bar-sub-item {
+  display: inline-block;
+  margin-left: 10px;
+  width: fit-content;
+  height: fit-content;
+}
+#row-item1 {
+  color: #ffffff;
+  font-family: Roboto;
+  font-size: 15px;
+  letter-spacing: 0;
+  line-height: 18px;
+}
+#row-item2 {
+  color: #ffffff;
+  font-family: Roboto;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 25px;
+}
+.divider1 {
+  margin-top: 0;
+}
+@media screen and (max-width: 900px) {
+  .divider {
+    display: none;
+  }
+  .divider1 {
+    display: none;
+  }
+  .body {
+    align-items: center;
+    margin: 0px;
+  }
+  .top-container {
+    align-items: center;
+    text-align: center;
+  }
+  .bottom-sheet {
+    margin: 0;
+    white-space: nowrap;
+    background-color: rgba(25, 25, 25, 0.2);
+    display: inline block;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .bottom-bar-item {
+    margin: 20px;
+  }
+}
+@media screen and (max-height: 800px) {
+  .body {
+    height: 100%;
+  }
+  .bottom-sheet {
+    margin-top: 50px;
+  }
+}
