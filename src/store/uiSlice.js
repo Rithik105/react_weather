@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const uiInitialState = {
   tab: 0,
-  celsius: true,
+  celsius: true,searchText:"",autocomplete:[],
 };
 const uiSlice = createSlice({
   name: "ui",
@@ -14,6 +14,12 @@ const uiSlice = createSlice({
     switchCelsius(state, action) {
       state.celsius = action.payload;
     },
+    setSearchText(state,action){
+      state.searchText=action.payload;
+    },
+    updateAutocomplete(state,action){
+      state.autocomplete=action.payload;
+    }
   },
 });
 

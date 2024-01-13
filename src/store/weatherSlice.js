@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const weatherInitalSlice = {
+const weatherInitalState = {
   weather: {
     location: {
       localtime: "",
@@ -23,7 +23,7 @@ const weatherInitalSlice = {
 };
 const weatherSlice = createSlice({
   name: "weather",
-  initialState: weatherInitalSlice,
+  initialState: weatherInitalState,
   reducers: {
     changeWeatherData(state, action) {
       console.log(action.payload.location.localtime);
