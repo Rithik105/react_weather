@@ -5,11 +5,10 @@ import searchIcon from "../../assets/images/icon_search_white.png";
 import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../../store/uiSlice";
 import styled from "styled-components";
-import {weatherActions} from "../../store/weatherSlice"
-
+import { weatherActions } from "../../store/weatherSlice";
 
 import { useEffect } from "react";
-
+import { recentActions } from "../../store/recentSlice";
 
 let initial = true;
 export default function HeaderComponent() {
@@ -19,7 +18,7 @@ export default function HeaderComponent() {
     state.weather.weather.location.localtime,
   ]);
 
-  const [searchText] = useSelector((state)=>[state.ui.searchText])
+  const [searchText] = useSelector((state) => [state.ui.searchText]);
   const [searchItems] = useSelector((state) => [state.ui.autocomplete]);
 
   function changeTab(index) {
@@ -27,48 +26,55 @@ export default function HeaderComponent() {
     dispatch(uiActions.switchTab(index));
   }
 
-   useEffect(() => {
-     if (initial) {
-       try {
-         fetchWeather("udupi");
-       } catch (error) {
-         console.log(error);
-       }
-     }
-     initial = false;
-   });
+  useEffect(() => {
+    if (initial) {
+      try {
+        fetchWeather("udupi");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    initial = false;
+  });
 
-   function handleSearchClick(text){
-    dispatch(uiActions.setSearchText(text))
-    dispatch(uiActions.updateAutocomplete([]))
-    fetchWeather(text)
-   }
+  function handleSearchClick(text) {
+    dispatch(uiActions.setSearchText(text));
+    dispatch(uiActions.updateAutocomplete([]));
 
-   async function fetchWeather(text) {
-     const response = await fetch(
-       "http://api.weatherapi.com/v1/current.json?key=ccec4479ced04aeca23153343230405&q="+text+"&aqi=no"
-     );
-     const responseData = await response.json();
-     console.log(responseData.location.localtime);
-   
-     dispatch(weatherActions.changeWeatherData(responseData));
-   }
-
-  function handleSearchText(text){
-    dispatch(uiActions.setSearchText(text.target.value));
-    if(text.target.value!=="")
-    fetchSearchData(text.target.value);
-
-    
+    fetchWeather(text);
   }
 
-  async function fetchSearchData(text){
+  async function fetchWeather(text) {
+    let firstFetch = initial;
     const response = await fetch(
-      "http://api.weatherapi.com/v1/search.json?key=ccec4479ced04aeca23153343230405&q="+text
+      "http://api.weatherapi.com/v1/current.json?key=ccec4479ced04aeca23153343230405&q=" +
+        text +
+        "&aqi=no"
     );
-    const responseData = await response.json()
+    const responseData = await response.json();
+    console.log(responseData.location.localtime);
+
+    dispatch(weatherActions.changeWeatherData(responseData));
+    console.log(initial);
+    if (!firstFetch) {
+      dispatch(recentActions.addToRecent(responseData));
+    }
+    firstFetch = false;
+  }
+
+  function handleSearchText(text) {
+    dispatch(uiActions.setSearchText(text.target.value));
+    if (text.target.value !== "") fetchSearchData(text.target.value);
+  }
+
+  async function fetchSearchData(text) {
+    const response = await fetch(
+      "http://api.weatherapi.com/v1/search.json?key=ccec4479ced04aeca23153343230405&q=" +
+        text
+    );
+    const responseData = await response.json();
     console.log(responseData);
-    dispatch(uiActions.updateAutocomplete(responseData))
+    dispatch(uiActions.updateAutocomplete(responseData));
   }
   console.log(searchItems);
 
@@ -78,18 +84,28 @@ export default function HeaderComponent() {
         <img id="burger-menu-icon-mobile" src={menuIcon} alt="burger" />
         <img src={logoWeb} alt="logo" />
         <div class="search-container">
-          <input value={searchText} type="text" onChange={(evt) => handleSearchText(evt)} />
+          <input
+            value={searchText}
+            type="text"
+            onChange={(evt) => handleSearchText(evt)}
+          />
           <img src={searchIcon} alt="search" />
         </div>
         <img id="search-button-mobile" src={searchIcon} alt="search" />
       </div>
-      {searchItems.length===0 ?
-     <></>: <SearchSuggestion>{
-     searchItems.map((item)=>
-      <SearchItem onClick={()=>handleSearchClick(item.name)} key={item.name}>{item.name+" "+item.region}</SearchItem>
-     )
-     }</SearchSuggestion>
-}
+      {searchItems.length === 0 ? (
+        <></>
+      ) : (
+        <SearchSuggestion>
+          {searchItems.map((item) => (
+            <SearchItem
+              onClick={() => handleSearchClick(item.name)}
+              key={item.name}>
+              {item.name + " " + item.region}
+            </SearchItem>
+          ))}
+        </SearchSuggestion>
+      )}
       <div class="title-date-mobile"></div>
 
       <div class="navbar">
@@ -111,20 +127,20 @@ export default function HeaderComponent() {
   );
 }
 
-
 const SearchSuggestion = styled.div`
   position: absolute;
-  background-color: rgba(255, 255, 255,1);
+  background-color: rgba(255, 255, 255, 1);
   color: black;
-  right: 80px;
+  right: 7%;
   top: 100px;
-  width: 455px;
+  width: 40%;
   padding: 10px;
   box-sizing: border-box;
   border-radius: 10px;
+  border: 1px solid #b3b3b3;
 `;
 
 const SearchItem = styled.div`
-margin-bottom: 5px;
-cursor: pointer;
+  margin-bottom: 5px;
+  cursor: pointer;
 `;

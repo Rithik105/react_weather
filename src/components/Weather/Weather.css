@@ -109,6 +109,19 @@
   letter-spacing: 0;
   line-height: 19px;
 }
+.temperature-button-item2 {
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  flex: 1;
+  height: 100%;
+  border: 1px solid white;
+  background-color: white;
+  color: rgb(255, 0, 0);
+  font-family: Roboto;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 19px;
+}
 .temperature-button-item-extra {
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;

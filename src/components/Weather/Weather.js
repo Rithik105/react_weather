@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./Weather.css";
 import heartIcon from "../../assets/images/icon_favourite_Active.png";
+import heartIcon_outline from "../../assets/images/heart.png";
 import humidityIcon from "../../assets/images/icon_humidity_info.png";
 import precipitaionIcon from "../../assets/images/icon_precipitation_info.png";
 import temperatureIcon from "../../assets/images/icon_temperature_info.png";
@@ -8,14 +9,29 @@ import visibilityIcon from "../../assets/images/icon_visibility_info.png";
 import windIcon from "../../assets/images/icon_wind_info.png";
 import styled from "styled-components";
 import { uiActions } from "../../store/uiSlice";
+import { useEffect, useState } from "react";
+import { favActions } from "../../store/favouriteSlice";
 
 export default function WeatherComponent() {
   const dispatch = useDispatch();
   const [weather] = useSelector((state) => [state.weather.weather]);
   const [celcius] = useSelector((state) => [state.ui.celsius]);
+  const [favState] = useSelector((state) => [state.favourite.favState]);
+
+  useEffect(() => {
+    dispatch(favActions.checkFav(weather));
+  }, [weather]);
 
   function switchCelcius(value) {
     dispatch(uiActions.switchCelsius(value));
+  }
+  function addFav() {
+    dispatch(favActions.addToFav(weather));
+    dispatch(favActions.checkFav(weather));
+  }
+  function removeFav() {
+    dispatch(favActions.removeFromFav(weather));
+    dispatch(favActions.checkFav(weather));
   }
 
   return (
@@ -25,9 +41,14 @@ export default function WeatherComponent() {
           {weather.location.name}, {weather.location.region}
         </p>
         <div class="top-container-fav-item">
-          <FavButton img={heartIcon}></FavButton>
-          <div id="fav-text">Added to favourite</div>
-          <div id="fav-text">Add to favourite</div>
+          <FavButton
+            onClick={favState ? removeFav : addFav}
+            img={favState ? heartIcon : heartIcon_outline}></FavButton>
+          {favState ? (
+            <div id="fav-text">Added to favourite</div>
+          ) : (
+            <div id="fav-text">Add to favourite</div>
+          )}
         </div>
       </div>
       <div class="main-container">
@@ -39,12 +60,18 @@ export default function WeatherComponent() {
           </div>
           <div id="temperature-button">
             <button
-              class="temperature-button-item temperature-button-item-extra"
+              class={
+                celcius
+                  ? "temperature-button-item2 temperature-button-item-extra"
+                  : "temperature-button-item temperature-button-item-extra"
+              }
               onClick={() => switchCelcius(true)}>
               <sup>0</sup>C
             </button>
             <button
-              class="temperature-button-item"
+              class={
+                celcius ? "temperature-button-item" : "temperature-button-item2"
+              }
               onClick={() => switchCelcius(false)}>
               <sup>0</sup>F
             </button>

@@ -66,11 +66,9 @@
   font-weight: 500;
   letter-spacing: 0;
   line-height: 19px;
-  background-color: aqua;
 }
 
 .fav-container-center-item {
-  background-color: beige;
   display: flex;
   flex-direction: row;
   align-items: center;
